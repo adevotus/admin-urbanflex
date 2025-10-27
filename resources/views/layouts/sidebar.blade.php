@@ -20,19 +20,6 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="icon-contract menu-icon"></i>
-                <span class="menu-title">Vehicles</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="icon-paper menu-icon"></i>
-                <span class="menu-title">Payments</span>
-            </a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
@@ -76,6 +63,19 @@
             </div>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="icon-contract menu-icon"></i>
+                <span class="menu-title">Vehicles</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Payments</span>
+            </a>
+        </li>
 
 
 
