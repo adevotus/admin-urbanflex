@@ -114,13 +114,15 @@
                                             <div class="tab-pane fade show active" id="accounts" role="tabpanel">
                                                 <div class="row">
                                                     <div class="col-md-10 mx-auto">
-                                                        <form class="pt-3" method="POST" action="#">
+                                                        <form id="updatePasswordForm" class="pt-3" method="POST">
                                                             @csrf
+                                                            <input type="hidden" name="userNumber" id="userNumber" value="{{ $user->userNumber }}">
+
                                                             <div class="form-group mb-3">
                                                                 <label for="current_password" class="fw-bold">Current Password</label>
                                                                 <div class="input-group">
                                                                   <span class="input-group-text bg-transparent border-end-0"><i class="ti-lock text-primary"></i></span>
-                                                                    <input type="password" id="current_password" name="current_password" class="form-control border-start-0" placeholder="Enter current password">
+                                                                    <input type="password" id="current_password" name="current_password" class="form-control border-start-0" placeholder="Enter current password" required>
                                                                 </div>
                                                             </div>
 
@@ -128,7 +130,7 @@
                                                                 <label for="new_password" class="fw-bold">New Password</label>
                                                                 <div class="input-group">
                                                                  <span class="input-group-text bg-transparent border-end-0"><i class="ti-lock text-primary"></i></span>
-                                                                    <input type="password" id="new_password" name="new_password" class="form-control border-start-0" placeholder="Enter new password">
+                                                                    <input type="password" id="new_password" name="new_password" class="form-control border-start-0" placeholder="Enter new password" required>
                                                                 </div>
                                                             </div>
 
@@ -136,12 +138,17 @@
                                                                 <label for="confirm_password" class="fw-bold">Confirm Password</label>
                                                                 <div class="input-group">
                                                                 <span class="input-group-text bg-transparent border-end-0"><i class="ti-lock text-primary"></i></span>
-                                                                    <input type="password" id="confirm_password" name="confirm_password" class="form-control border-start-0" placeholder="Confirm new password">
+                                                                    <input type="password" id="confirm_password" name="confirm_password" class="form-control border-start-0" placeholder="Confirm new password" required>
                                                                 </div>
                                                             </div>
 
                                                             <div class="d-grid">
-                                                                <button class="btn btn-primary btn-md fw-semibold" type="submit" style="background-color: #263e8a; border-color: #263e8a;">Update Password</button>
+                                                                <button id="updatePasswordBtn" class="btn btn-primary btn-md fw-semibold" type="submit"
+                                                                        style="background-color: #263e8a; border-color: #263e8a;">
+                                                                    <span class="spinner-border spinner-border-sm me-2 d-none" id="btnSpinner" role="status" aria-hidden="true"></span>
+                                                                    <span id="btnText">Update Password</span>
+                                                                </button>
+
                                                             </div>
                                                         </form>
                                                     </div>
@@ -256,7 +263,6 @@
 
 
 
-
                 </div>
             </div>
             <!-- content-wrapper ends -->
@@ -272,4 +278,53 @@
 @include('assets.js')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#updatePasswordForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let $btn = $('#updatePasswordBtn');
+            let $spinner = $('#btnSpinner');
+            let $text = $('#btnText');
+
+            // Show spinner
+            $spinner.removeClass('d-none');
+            $text.text('Updating...');
+            $btn.prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('user.update-password') }}",
+                method: "POST",
+                data: {
+                    current_password: $('#current_password').val(),
+                    new_password: $('#new_password').val(),
+                    confirm_password: $('#confirm_password').val(),
+                    userNumber: $('#userNumber').val(),
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    console.log("the response",response);
+                    if(response.status ==='200'){
+                        toastr.success(response.Message || 'Password updated successfully!');
+                        $('#updatePasswordForm')[0].reset();
+                    }else {
+                        toastr.info(response.Message || 'Failed to update password.');
+                    }
+                },
+                error: function (xhr) {
+                    let msg = xhr.responseJSON?.message || 'Failed to update password.';
+                    toastr.error(msg);
+                },
+                complete: function () {
+                    // Reset button
+                    $spinner.addClass('d-none');
+                    $text.text('Update Password');
+                    $btn.prop('disabled', false);
+                }
+            });
+        });
+    });
+</script>
+
+
 

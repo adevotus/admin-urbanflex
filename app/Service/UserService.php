@@ -32,6 +32,7 @@ class UserService {
                 'address'     => $userData['address'] ?? null,
                 'userNumber'  => $userData['userNumber'] ?? null,
                 'status'      => $userData['status'] ?? 'ACTIVE',
+                'role_name'   => $userData['role']['name'],
                 'last_login' => now(),
             ]);
 

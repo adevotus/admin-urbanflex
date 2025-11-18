@@ -21,6 +21,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap5.min.css')}}">
 
 </head>
 <body class="sidebar-fixed">

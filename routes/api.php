@@ -27,3 +27,5 @@ Route::middleware('verify.jwt')->group(function () {
         ]);
     });
 });
+
+

@@ -10,6 +10,11 @@ use Firebase\JWT\Key;
 
 class CheckSSOToken
 {
+    protected $authHost;
+    public function __construct(){
+
+        $this->authHost = config('app.auth_host');
+    }
     /**
      * Handle an incoming request.
      *
@@ -22,7 +27,7 @@ class CheckSSOToken
         $token = session('jwt_token');
 
         if (!$token) {
-            return redirect('http://127.0.0.1:8081/login')->with('error', 'Unauthorized: Please login.');
+            return redirect($this->authHost.'/login')->with('error', 'Unauthorized: Please login.');
         }
 
         try {
@@ -34,7 +39,7 @@ class CheckSSOToken
 
         } catch (\Exception $e) {
             session()->forget(['jwt_token', 'user']);
-            return redirect('http://127.0.0.1:8081/login')->with('error', 'Session expired, please login again.');
+            return redirect($this->authHost.'/login')->with('error', 'Session expired, please login again.');
         }
 
         // Optionally attach user info to request

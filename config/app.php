@@ -128,6 +128,8 @@ return [
     'jwt_secret' => env('JWT_SECRET', 'I06M3O9CxJr8ZCQNtSwWjsncTWS1Jfn8VN0lhdGwKnTNPRYCzPccEk50oTaMAoIz'),
 
      'auth_host' => env('AUTH_SERVICE_HOST', 'http://127.0.0.1:8081'),
+
+     'jwt_end_point_token' => env('JWT_END_POINT_TOKEN', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE2NzkzMjQsImV4cCI6MTc5MzIxNTMyNCwidHlwZSI6ImVuZHBvaW50In0.NTSiwK0aGGcGOd5qhNToP00NYFiVKTx-aIRweYIzvgI'),
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver

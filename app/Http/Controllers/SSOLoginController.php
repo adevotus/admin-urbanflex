@@ -35,7 +35,6 @@ class SSOLoginController extends Controller
             if ($response->failed()) {
                 abort(401, "Invalid or expired SSO code");
             }
-
             $data = $response->json();
             $token = $data['token'];
             $user  = $data['user']; // full user object
@@ -59,11 +58,23 @@ class SSOLoginController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function create()
-    {
-        //
+    public function ssoLogout(Request $request){
+        $token = session('jwt_token');
+
+        if ($token) {
+            // Call Auth Module API to invalidate token
+            $authApi = $this->authHost.'/api/v1/logout';
+            Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token,
+            ])->post($authApi);
+
+            // Clear local session
+            session()->forget(['jwt_token', 'user']);
+        }
+
+        return redirect($this->authHost.'/login');
     }
 
     /**

@@ -15,8 +15,8 @@
             </a>
             <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">Operations</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#"> Clients </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('ops-staff')}}">Operations</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('client-staff')}}"> Clients </a></li>
                 </ul>
             </div>
         </li>
@@ -64,20 +64,18 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link {{ request()->routeIs('vehicle-list') ? 'active' : '' }}" href="{{route('vehicle-list')}}">
                 <i class="icon-contract menu-icon"></i>
                 <span class="menu-title">Vehicles</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link {{ request()->routeIs('payment-list') ? 'active' : '' }}" href="{{route('payment-list')}}">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Payments</span>
             </a>
         </li>
-
-
 
     </ul>
 </nav>

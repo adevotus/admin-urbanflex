@@ -22,6 +22,8 @@
 <script src="{{asset('assets/js/toastr.min.js')}}"></script>
 <script src="{{asset('assets/js/tabs.js')}}"></script>
 <script src="{{asset('assets/js/modal-demo.js')}}"></script>
+<script src="{{asset('assets/js/dataTables.bootstrap5.min.js')}}"></script>
+<script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
 
 <!-- End custom js for this page-->
 </body>

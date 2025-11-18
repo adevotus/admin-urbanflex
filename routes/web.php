@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\JWTTokenGeneratorController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SSOLoginController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\VehicleController;
 use App\Util\LoggerUtil;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -20,7 +23,6 @@ use Firebase\JWT\Key;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 
 
@@ -52,25 +54,23 @@ Route::middleware('check.sso')->group(function () {
 
     Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 
-    Route::post('/logout', function(Request $request) {
-        $token = session('jwt_token');
-
-        if ($token) {
-            // Call Auth Module API to invalidate token
-            $authApi = 'http://127.0.0.1:8081/api/v1/logout';
-            Http::withHeaders([
-                'Authorization' => 'Bearer ' . $token,
-            ])->post($authApi);
-
-            // Clear local session
-            session()->forget(['jwt_token', 'user']);
-        }
-
-        return redirect('http://127.0.0.1:8081/login');
-    })->name('logout');
-
-
+    Route::post('/logout',[SSOLoginController::class,'ssoLogout'])->name('logout');
     Route::get('admin-profile', [ProfileController::class, 'index'])->name('admin-profile');
+    Route::post('admin-profile/password', [ProfileController::class, 'updatePassword'])->name('user.update-password');
+
+
+
+    // users routes
+
+    Route::get('/admin/ops-staff',[StaffController::class,'opsStaff'])->name('ops-staff');
+    Route::get('/admin/client-staff',[StaffController::class,'clientStaff'])->name('client-staff');
+
+    Route::get('/admin/opsStaffList',[StaffController::class,'getOpsStaff'])->name('ops-staff-list');
+
+
+    Route::get('/admin/vehicle/list',[VehicleController::class,'index'])->name('vehicle-list');
+    Route::get('/admin/payment/list',[PaymentsController::class,'index'])->name('payment-list');
+
 });
 
 
